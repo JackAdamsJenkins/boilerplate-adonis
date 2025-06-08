@@ -9,7 +9,7 @@ export default function Home() {
 
       <div className="pt-4 h-full flex flex-col">
         {/* Header */}
-        <div className="grow pb-4 bg-gradient-to-b from-sand-1 to-sand-2 flex justify-center items-center">
+        <div className="grow pb-4 bg-gradient-to-b from-sand-1 to-sand-2 flex flex-col justify-center items-center">
           <a href="https://adonisjs.com" target="_blank" className="isolate">
             <svg className="w-16 h-16 fill-primary" viewBox="0 0 33 33">
               <path
@@ -19,6 +19,14 @@ export default function Home() {
               />
             </svg>
           </a>
+          <div className="mt-4">
+            <a
+              href="/auth/google"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-150"
+            >
+              Sign in with Google
+            </a>
+          </div>
         </div>
 
         {/* Bento with documentation, Adocasts, packages and Discord */}
