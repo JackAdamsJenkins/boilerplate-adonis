@@ -1,9 +1,47 @@
-import { Head } from '@inertiajs/react'
+import { Head, Link, usePage } from '@inertiajs/react' // Added Link and usePage
+
+interface User {
+  id: number;
+  fullName: string;
+  email: string;
+  avatar_url?: string;
+}
+
+interface PageProps {
+  auth: {
+    user: User | null;
+  };
+  // Add other page props if needed
+}
 
 export default function Home() {
+  const { props } = usePage<PageProps>()
+  const { user } = props.auth || { user: null } // Destructure user safely
+
   return (
     <>
       <Head title="Homepage" />
+
+      {/* Navigation Bar */}
+      <nav className="bg-sand-2 p-4 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link href="/" className="text-xl font-semibold text-primary">MyApp</Link>
+          <div className="space-x-4">
+            <Link href="/" className="text-sand-11 hover:text-primary">Home</Link>
+            {user ? (
+              <>
+                <Link href="/profile" className="text-sand-11 hover:text-primary">Profile</Link>
+                {/* Add a logout link/button here if needed */}
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-sand-11 hover:text-primary">Login</Link>
+                <Link href="/register" className="text-sand-11 hover:text-primary">Register</Link>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
 
       <div className="fixed xl:absolute left-8 right-8 top-0 bottom-0 xl:inset-0 max-w-screen-xl mx-auto before:content-[''] before:[background:repeating-linear-gradient(0deg,var(--sand-5)_0_4px,transparent_0_8px)] before:absolute before:top-0 before:left-0 before:h-full before:w-px after:content-[''] after:[background:repeating-linear-gradient(0deg,var(--sand-5)_0_4px,transparent_0_8px)] after:absolute after:top-0 after:right-0 after:h-full after:w-px"></div>
 
@@ -19,14 +57,17 @@ export default function Home() {
               />
             </svg>
           </a>
-          <div className="mt-4">
-            <a
-              href="/auth/google"
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-150"
-            >
-              Sign in with Google
-            </a>
-          </div>
+
+          {!user && (
+            <div className="mt-4">
+              <a
+                href="/auth/google"
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-150"
+              >
+                Sign in with Google
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Bento with documentation, Adocasts, packages and Discord */}
@@ -77,7 +118,7 @@ export default function Home() {
                 <svg className="h-6 w-6 fill-primary" viewBox="0 0 256 256">
                   <path
                     fill="currentColor"
-                    d="M208 24H72a32 32 0 0 0-32 32v168a8 8 0 0 0 8 8h144a8 8 0 0 0 0-16H56a16 16 0 0 1 16-16h136a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8m-88 16h48v72l-19.21-14.4a8 8 0 0 0-9.6 0L120 112Zm80 144H72a31.8 31.8 0 0 0-16 4.29V56a16 16 0 0 1 16-16h32v88a8 8 0 0 0 12.8 6.4L144 114l27.21 20.4A8 8 0 0 0 176 136a8 8 0 0 0 8-8V40h16Z"
+                    d="M208 24H72a32 32 0 0 0-32 32v168a8 8 0 0 0 8 8h144a8 8 0 0 0 0-16H56a16 16 0 0 1 16-16h136a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8m-88 16h48v72l-19.21-14.4a8 8 0 0 0-9.6 0L120 112Zm80 144H72a31.8 31.8 0 0 0-16 4.29V56a16 16 0 0 1 16-16h32v88a8 8 0 0 0 12.8 6.4L144 114l27.21 20.4A8 8 0 0 0 176 136a8 8 0 0 0 8-8V40h16v128a31.8 31.8 0 0 0 16-4.29v-4.29Z"
                   />
                 </svg>
               </div>
