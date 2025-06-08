@@ -27,26 +27,22 @@ export default class AuthController {
 
   async handleGoogleCallback({ response }: HttpContext) {
     const google = ally.use('google')
-
     /**
      * Know if the user denied the consent during the code flow
      */
     if (google.accessDenied()) {
       return 'Access was denied'
     }
-
     /**
      * Know if there was an error during the code flow
      */
     if (google.hasError()) {
       return google.getError()
     }
-
     /**
      * Access user info
      */
     const googleUser = await google.user()
-
     /**
      * Find or create user in the database
      */
@@ -64,12 +60,10 @@ export default class AuthController {
         password: Math.random().toString(36).slice(-8),
       }
     )
-
     /**
      * Generate access token
      */
     const token = await User.accessTokens.create(user)
-
     return response.ok({
       token: token.value!.release(),
       user,
@@ -79,20 +73,16 @@ export default class AuthController {
   async register({ request, response }: HttpContext) {
     try {
       const payload = await request.validate({ schema: registerSchema })
-
       const user = await User.create({
         fullName: payload.fullName,
         email: payload.email,
         password: payload.password, // Password will be hashed by the model hook
       })
-
       const token = await User.accessTokens.create(user)
-
       // Depending on your frontend setup, you might want to return the token
       // and let the frontend handle the redirect, or redirect from the backend.
       // For Inertia, redirecting from the backend is common.
       // return response.redirect('/profile') // Or '/home' or wherever appropriate
-
       // For API-style response:
       return response.created({
         token: token.value!.release(),
@@ -110,10 +100,8 @@ export default class AuthController {
   async login({ request, response }: HttpContext) {
     try {
       const { email, password } = await request.validate({ schema: loginSchema })
-
       const user = await User.verifyCredentials(email, password)
       const token = await User.accessTokens.create(user)
-
       return response.ok({
         token: token.value!.release(),
         user,

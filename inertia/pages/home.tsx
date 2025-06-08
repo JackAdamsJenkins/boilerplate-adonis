@@ -48,7 +48,6 @@ export default function Home() {
       <div className="pt-4 h-full flex flex-col">
         {/* Header */}
         <div className="grow pb-4 bg-gradient-to-b from-sand-1 to-sand-2 flex flex-col justify-center items-center">
-          {/* Removed the old Google Sign In button from here, assuming it might be on the login page */}
           <a href="https://adonisjs.com" target="_blank" className="isolate">
             <svg className="w-16 h-16 fill-primary" viewBox="0 0 33 33">
               <path
@@ -58,8 +57,7 @@ export default function Home() {
               />
             </svg>
           </a>
-          {/* The "Sign in with Google" button was here. It's better placed on the login/register pages. */}
-          {/* If it should remain on the home page for unauthenticated users, it can be added conditionally: */}
+
           {!user && (
             <div className="mt-4">
               <a
@@ -120,7 +118,7 @@ export default function Home() {
                 <svg className="h-6 w-6 fill-primary" viewBox="0 0 256 256">
                   <path
                     fill="currentColor"
-                    d="M208 24H72a32 32 0 0 0-32 32v168a8 8 0 0 0 8 8h144a8 8 0 0 0 0-16H56a16 16 0 0 1 16-16h136a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8m-88 16h48v72l-19.21-14.4a8 8 0 0 0-9.6 0L120 112Zm80 144H72a31.8 31.8 0 0 0-16 4.29V56a16 16 0 0 1 16-16h32v88a8 8 0 0 0 12.8 6.4L144 114l27.21 20.4A8 8 0 0 0 176 136a8 8 0 0 0 8-8V40h16Z"
+                    d="M208 24H72a32 32 0 0 0-32 32v168a8 8 0 0 0 8 8h144a8 8 0 0 0 0-16H56a16 16 0 0 1 16-16h136a8 8 0 0 0 8-8V32a8 8 0 0 0-8-8m-88 16h48v72l-19.21-14.4a8 8 0 0 0-9.6 0L120 112Zm80 144H72a31.8 31.8 0 0 0-16 4.29V56a16 16 0 0 1 16-16h32v88a8 8 0 0 0 12.8 6.4L144 114l27.21 20.4A8 8 0 0 0 176 136a8 8 0 0 0 8-8V40h16v128a31.8 31.8 0 0 0 16-4.29v-4.29Z"
                   />
                 </svg>
               </div>
