@@ -1,15 +1,54 @@
-import { Head } from '@inertiajs/react'
+import { Head, Link, usePage } from '@inertiajs/react' // Added Link and usePage
+
+interface User {
+  id: number;
+  fullName: string;
+  email: string;
+  avatar_url?: string;
+}
+
+interface PageProps {
+  auth: {
+    user: User | null;
+  };
+  // Add other page props if needed
+}
 
 export default function Home() {
+  const { props } = usePage<PageProps>()
+  const { user } = props.auth || { user: null } // Destructure user safely
+
   return (
     <>
       <Head title="Homepage" />
+
+      {/* Navigation Bar */}
+      <nav className="bg-sand-2 p-4 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link href="/" className="text-xl font-semibold text-primary">MyApp</Link>
+          <div className="space-x-4">
+            <Link href="/" className="text-sand-11 hover:text-primary">Home</Link>
+            {user ? (
+              <>
+                <Link href="/profile" className="text-sand-11 hover:text-primary">Profile</Link>
+                {/* Add a logout link/button here if needed */}
+              </>
+            ) : (
+              <>
+                <Link href="/login" className="text-sand-11 hover:text-primary">Login</Link>
+                <Link href="/register" className="text-sand-11 hover:text-primary">Register</Link>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
 
       <div className="fixed xl:absolute left-8 right-8 top-0 bottom-0 xl:inset-0 max-w-screen-xl mx-auto before:content-[''] before:[background:repeating-linear-gradient(0deg,var(--sand-5)_0_4px,transparent_0_8px)] before:absolute before:top-0 before:left-0 before:h-full before:w-px after:content-[''] after:[background:repeating-linear-gradient(0deg,var(--sand-5)_0_4px,transparent_0_8px)] after:absolute after:top-0 after:right-0 after:h-full after:w-px"></div>
 
       <div className="pt-4 h-full flex flex-col">
         {/* Header */}
-        <div className="grow pb-4 bg-gradient-to-b from-sand-1 to-sand-2 flex justify-center items-center">
+        <div className="grow pb-4 bg-gradient-to-b from-sand-1 to-sand-2 flex flex-col justify-center items-center">
+          {/* Removed the old Google Sign In button from here, assuming it might be on the login page */}
           <a href="https://adonisjs.com" target="_blank" className="isolate">
             <svg className="w-16 h-16 fill-primary" viewBox="0 0 33 33">
               <path
@@ -19,6 +58,18 @@ export default function Home() {
               />
             </svg>
           </a>
+          {/* The "Sign in with Google" button was here. It's better placed on the login/register pages. */}
+          {/* If it should remain on the home page for unauthenticated users, it can be added conditionally: */}
+          {!user && (
+            <div className="mt-4">
+              <a
+                href="/auth/google"
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition ease-in-out duration-150"
+              >
+                Sign in with Google
+              </a>
+            </div>
+          )}
         </div>
 
         {/* Bento with documentation, Adocasts, packages and Discord */}
